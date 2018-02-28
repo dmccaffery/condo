@@ -35,7 +35,7 @@ __condo-install-help() {
     echo 'Common options:'
     echo '  -h|-?|--help        print this help information'
     echo '  -l|--log            location of the installation log'
-    echo '                        DEFAULT: $CONDO_INSTALL_DIR/condo.log'
+    echo '                        DEFAULT: <install-dir>/condo.log'
     echo
     echo 'Arguments:'
     echo '  -nc|--no-color      do not emit color to output, which is useful for capture'
@@ -44,14 +44,14 @@ __condo-install-help() {
     echo '  -r|--reset          reinstall condo'
     echo '  -u|--update         update to the latest version of condo'
     echo '                        NOTE: this argument is effected by the branch argument; the version will be determined by the latest commit available on the specified branch.'
-    echo '  -b|--branch         install condo from the specified branch'
+    echo '  -v|--version        install the specified version of condo, which could be a branch, tag, or git reference'
     echo '                        DEFAULT: master'
     echo '  -s|--source         install condo from the specified source path (local)'
     echo '  --uri               install condo from the specified URI'
     echo
     echo 'EXAMPLE:'
-    echo '  ./condo.sh install --branch feature/cli --no-color --install-dir $HOME/.condo --log $HOME/condo.log'
-    echo '    - installs condo from the `feature/cli` branch'
+    echo '  ./condo.sh install --version develop --no-color --install-dir $HOME/.condo --log $HOME/condo.log'
+    echo '    - installs condo from the `develop` branch'
     echo '    - no color will be emitted to the console (either STDOUT or STDERR)'
     echo '    - condo will be installed to `$HOME/.condo`'
     echo '    - the installation log will be saved to $HOME/condo-install.log'
@@ -91,8 +91,6 @@ __condo-help() {
     echo
     echo 'Advanced commands:'
     echo '  nuget               uses condo to manipulate nuget feeds and credentials'
-    echo '  conventions         uses condo to create new conventions'
-    echo '  config              edit the condo configuration'
 }
 
 __condo-install() {
@@ -142,7 +140,7 @@ __condo-install() {
                 shift
                 ;;
             -b|--branch)
-                local CONDO_BRANCH=$2
+                local CONDO_VERSION=$2
                 shift
                 ;;
             -s|--source)
@@ -187,12 +185,12 @@ __condo-install() {
         export DOTNET_INSTALL_DIR=~/.dotnet
     fi
 
-    if [ -z "${CONDO_BRANCH:-}" ]; then
-        CONDO_BRANCH='master'
+    if [ -z "${CONDO_VERSION:-}" ]; then
+        CONDO_VERSION='master'
     fi
 
     if [ -z "${CONDO_URI:-}" ]; then
-        CONDO_URI="https://github.com/automotivemastermind/condo/tarball/$CONDO_BRANCH"
+        CONDO_URI="https://github.com/automotivemastermind/condo/tarball/$CONDO_VERSION"
     fi
 
     if [ "$CONDO_LOCAL" = "1" ]; then

@@ -326,7 +326,7 @@ namespace AM.Condo.Tasks
                 any.SetMetadata("TargetFramework", framework);
                 any.SetMetadata("RuntimeIdentifier", string.Empty);
                 any.SetMetadata("OutputPath", Path.Combine(root, framework, "dotnet") + Path.DirectorySeparatorChar);
-                any.SetMetadata("TestLogFileName", string.Join('.', file, framework, "dotnet"));
+                any.SetMetadata("TestLogFileName", string.Join(".", file, framework, "dotnet"));
 
                 // iterate over each runtime identifier
                 foreach (var runtimeIdentifier in runtimeIdentifiers)
@@ -357,7 +357,7 @@ namespace AM.Condo.Tasks
 
                     // set the output path
                     contained.SetMetadata("OutputPath", Path.Combine(root, framework, runtimeIdentifier) + Path.DirectorySeparatorChar);
-                    contained.SetMetadata("TestLogFileName", string.Join('.', file, framework, runtimeIdentifier));
+                    contained.SetMetadata("TestLogFileName", string.Join(".", file, framework, runtimeIdentifier));
                 }
             }
         }

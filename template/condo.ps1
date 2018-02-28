@@ -147,21 +147,29 @@ function Write-Info([string] $message) {
 }
 
 function Get-File([string] $url, [string] $path, [int] $retries = 5) {
-    try {
-        Invoke-WebRequest $url -OutFile $path > $null
-    }
-    catch [System.Exception] {
-        Write-Failure "Unable to retrieve file: $url"
+    while ($retries -gt 0) {
+        try {
+            [Net.ServicePointManager]::SecurityProtocol = "tls12, tls11, tls"
+            Invoke-WebRequest $url -OutFile $path > $null
 
-        if ($retries -eq 0) {
-            $exception = $_.Exception
-            throw $exception
+            return
         }
+        catch [System.Exception] {
+            Write-Failure "Unable to retrieve file: $url"
 
-        Write-Failure "Retrying in 10 seconds... attempts left: $retries"
-        Start-Sleep -Seconds 10
-        $retries--
+            if ($retries -eq 0) {
+                $exception = $_.Exception
+                throw $exception
+            }
+
+            Write-Failure "Retrying in 10 seconds... attempts left: $retries"
+            Start-Sleep -Seconds 10
+            $retries--
+        }
     }
+
+    Write-Failure "Failed to retrieve condo; exiting..."
+    exit 1
 }
 
 # find the script path
@@ -172,12 +180,11 @@ $SrcRoot = "$CondoRoot\.src"
 $CondoScript = "$SrcRoot\src\AM.Condo\Scripts\condo.ps1"
 
 if ($PSCmdlet.ParameterSetName -eq 'ByBranch') {
-    $Uri = "https://github.com/automotivemastermind/condo/archive/$Branch.zip"
+    $Uri = "https://github.com/automotivemastermind/condo/zipball/$Branch"
 }
 
 if ($Reset.IsPresent -and (Test-Path $CondoRoot)) {
     Write-Info 'Resetting condo build system...'
-
     Remove-Item -Recurse -Force $CondoRoot > $null
 }
 

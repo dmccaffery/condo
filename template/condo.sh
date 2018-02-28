@@ -13,8 +13,7 @@ ROOT_PATH=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 # setup well-known condo paths
 CONDO_ROOT="$HOME/.am/condo"
 SRC_ROOT="$CONDO_ROOT/.src"
-SCRIPT_ROOT="$SRC_ROOT/src/AM.Condo/Scripts"
-CONDO_SHELL="$CONDO_ROOT/condo.sh"
+CONDO_SHELL="$SRC_ROOT/src/AM.Condo/Scripts/condo.sh"
 
 # change to the root path
 cd $ROOT_PATH
@@ -38,7 +37,6 @@ condo_help() {
 }
 
 CONDO_OPTS=()
-MSBUILD_OPTS=("--")
 
 # continue testing for arguments
 while [[ $# > 0 ]]; do
@@ -81,6 +79,7 @@ while [[ $# > 0 ]]; do
             shift
             ;;
         --)
+            CONDO_OPTS+=("$1")
             shift
             break
             ;;
@@ -93,7 +92,7 @@ while [[ $# > 0 ]]; do
     shift
 done
 
-MSBUILD_OPTS+=("$@")
+CONDO_OPTS+=("$@")
 
 if [ -z "${DOTNET_INSTALL_DIR:-}" ]; then
     export DOTNET_INSTALL_DIR=~/.dotnet
@@ -123,7 +122,6 @@ if [ ! -d "$SRC_ROOT" ]; then
     if [ ! -z $CONDO_SOURCE ]; then
         info "Using condo build system from $CONDO_SOURCE..."
         cp -r $CONDO_SOURCE/* $SRC_ROOT/
-        cp -r $SCRIPT_ROOT/* $CONDO_ROOT
     else
         info "Using condo build system from $CONDO_URI..."
 
@@ -150,7 +148,6 @@ if [ ! -d "$SRC_ROOT" ]; then
         mkdir -p $CONDO_EXTRACT
         tar xf $CONDO_TAR --strip-components 1 --directory $CONDO_EXTRACT
         cp -r $CONDO_SOURCE/* $SRC_ROOT/
-        cp -r $SCRIPT_ROOT/* $CONDO_ROOT
         rm -Rf $CONDO_TEMP
     fi
 fi
@@ -159,7 +156,7 @@ fi
 chmod a+x $CONDO_SHELL
 
 # execute condo shell with the arguments
-$CONDO_SHELL "${CONDO_OPTS[@]}" "${MSBUILD_OPTS[@]}"
+$CONDO_SHELL "${CONDO_OPTS[@]}"
 
 # capture the current exit code
 EXIT_CODE=$?
