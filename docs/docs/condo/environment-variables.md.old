@@ -1,9 +1,9 @@
-# Enviornment Variables
+# Environment Variables
 
 ## Building condo
 
-Variable            | Type     | What does it do
---------------------|----------|----------------
+Variable            | Type       | What does it do
+--------------------|------------|----------------
 SKIP_NPM            | `bool`     | Skips tests for npm install
 SKIP_BOWER          | `bool`     | Skips tests for bower install
 SKIP_POLYMER        | `bool`     | Skips tests for polymer

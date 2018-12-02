@@ -1,0 +1,6 @@
+#recipe Docs
+
+Settings[Keys.Host] = "automotivemastermind.github.io/condo";
+Settings[DocsKeys.Title] = "Condo";
+Settings[Keys.LinksUseHttps] = true;
+Settings[Keys.LinkHideExtensions] = true;
