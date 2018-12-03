@@ -1,8 +1,0 @@
-- name: Development Environment
-  href: environment.md
-- name: Engineering Guidelines
-  href: guidelines.md
-- name: Coding Standards (C#)
-  href: standards.md
-- name: Contributors
-  href: contributors.md

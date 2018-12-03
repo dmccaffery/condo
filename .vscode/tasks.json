@@ -1,51 +1,31 @@
 {
-  "version": "0.1.0",
-  "windows": {
-    "command": "condo.cmd",
-    "args": [
-      "-NoColor"
-    ]
-  },
-  "linux": {
-    "command": "./condo.sh",
-    "args": [
-      "--no-color"
-    ]
-  },
-  "osx": {
-    "command": "./condo.sh",
-    "args": [
-      "--no-color"
-    ]
-  },
-  "isShellCommand": true,
-  "args": [],
-  "taskSelector": "/t:",
+  "version": "2.0.0",
   "tasks": [
     {
-      "taskName": "compile",
-      "problemMatcher": "$msCompile"
-    },
-    {
-      "taskName": "build",
-      "isBuildCommand": true,
-      "problemMatcher": "$msCompile"
-    },
-    {
-      "taskName": "test",
-      "isTestCommand": true,
-      "problemMatcher": "$msCompile"
-    },
-    {
-      "taskName": "publish",
-      "problemMatcher": "$msCompile"
-    },
-    {
-      "taskName": "debug",
+      "label": "docs",
+      "command": "hugo",
+      "type": "process",
       "args": [
-        "/p:CONDO_DEBUG=true"
+        "server",
+        "--source",
+        "docs",
+        "--destination",
+        "../artifacts/docs",
+        "--watch",
+        "--buildDrafts",
+        "--enableGitInfo",
+        "--i18n-warnings"
       ],
-      "problemMatcher": "$msCompile"
+      "problemMatcher": "$go",
+      "isBackground": true,
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "dedicated",
+        "showReuseMessage": false,
+        "clear": true
+      }
     }
   ]
 }

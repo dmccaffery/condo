@@ -1,0 +1,26 @@
+baseURL: '/'
+languageCode: en-us
+defaultContentLanguage: en
+title: Condo
+theme: hugo-theme-learn
+metaDataFormat: yaml
+defaultContentLanguageInSubdir: true
+
+params:
+  editURL: https://github.com/automotivemastermind/condo/edit/develop/docs/content/
+  description: Documentation for Condo
+  author: Deavon M. McCaffery
+  showVisitedLinks: true
+  disableBreadcrumb: false
+  disableNextPrev: false
+
+languages:
+  en:
+    title: Condo
+    weight: 1
+    languageName: English
+
+  pl:
+    title: Condo
+    weight: 2
+    languageName: Polskie
