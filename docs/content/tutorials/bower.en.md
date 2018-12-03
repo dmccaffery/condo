@@ -31,5 +31,5 @@ In the `Prepare` target, condo will look for a `bower.json` file and consequent 
 
 Condo will then prepare and execute `bower install` with any options you might have specified.
 
-[get-started]: {{< relref "get-started" >}}
+[get-started]: {{< relref "/tutorials/get-started" >}}
 [lifecycle]: {{< relref "/concepts/lifecycle" >}}
